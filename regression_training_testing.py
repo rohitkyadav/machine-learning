@@ -19,13 +19,13 @@ df = df[['Adj. Close', 'HL_PCT', 'PCT_change', 'Adj. Volume']]
 forecast_col = 'Adj. Close'
 df.fillna(-99999, inplace=True)
 
-forecast_out = int(math.ceil(0.01*len(df)))
+forecast_out = int(math.ceil(0.1*len(df)))
 # print(forecast_out)   # number of days we are looking forward to 
 
 df['label'] = df[forecast_col].shift(-forecast_out)   # wiil predict the percent at which google stock will close from Adj. Close
 df.dropna(inplace=True)
 
-X = np.array(df.drop(['label'], 1))  # X is a feature
+X = np.array(df.drop(['label', 'Adj. Close'], 1))  # X is a feature
 y = np.array(df['label'])  # y is a label
 X = preprocessing.scale(X)
 
